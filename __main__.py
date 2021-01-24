@@ -16,7 +16,7 @@ if __name__ == "__main__":
             pass
 
     gen = PGen(args.length, allowed_chars=args.allowed_chars,
-               exclude_ambigous_chars=args.exclude_ambigous)
+               exclude_ambigous_chars=args.exclude_ambigous_chars)
     pwd = gen.generate()
 
     pwd.learn()
