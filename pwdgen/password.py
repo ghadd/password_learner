@@ -24,3 +24,6 @@ class Password:
         except IOError as e:
             raise IOError(
                 "Could not load any password from previous sessions.")
+
+    def learn(self):
+        pass
