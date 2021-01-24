@@ -14,7 +14,7 @@ with open("requirements.txt") as fp:
 
 def _post_install(dir):
     logger.info("Copying executable to /usr/bin/pwdlearner")
-    copyfile("__main__.py", "/usr/bin/pwdlearner")
+    copyfile("pwdlearn/__main__.py", "/usr/bin/pwdlearner")
     logger.info("Granting executable rights...")
     chmod("/usr/bin/pwdlearner", 0o755)
     logger.info("OK.")
@@ -31,7 +31,7 @@ class install(_install):
 setup = install(
     setup(
         name="Password Learner",
-        version="1.0.1",
+        version="1.0.2",
         description="Password Learner Utility",
         author="Daniil Timachov",
         author_email="daniiltimachov@gmail.com",
