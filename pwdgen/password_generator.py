@@ -78,5 +78,9 @@ class PasswordGenerator(object):
             str: a generated password
 
         """
-        contents = "".join(random.sample(self.general_set, self.size))
+        print(self.general_set * self.size)
+        print(self.size)
+
+        contents = "".join(random.sample(
+            list(self.general_set * self.size), self.size))
         return Password(self.size, self.config, contents)

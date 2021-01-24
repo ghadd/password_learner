@@ -25,7 +25,7 @@ if __name__ == "__main__":
             exit(1)
     else:
         gen = PGen(
-            args.length,
+            int(args.length),
             allowed_chars=args.allowed_chars,
             exclude_ambigous_chars=args.exclude_ambigous_chars,
         )
