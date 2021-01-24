@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from os import path
 from setuptools import setup, find_packages
 from setuptools.command.install import install as _install
 from shutil import copyfile
@@ -10,6 +11,10 @@ logger = logging.getLogger()
 
 with open("requirements.txt") as fp:
     install_requires = fp.readlines()
+
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 
 def _post_install(dir):
@@ -31,8 +36,10 @@ class install(_install):
 setup = install(
     setup(
         name="Password Learner",
-        version="1.0.3",
+        version="1.0.4",
         description="Password Learner Utility",
+        long_description=long_description,
+        long_description_content_type='text/markdown',
         author="Daniil Timachov",
         author_email="daniiltimachov@gmail.com",
         url="https://github.com/ghadd/password_learner",
