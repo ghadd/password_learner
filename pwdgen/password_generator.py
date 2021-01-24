@@ -30,7 +30,6 @@ class PasswordGenerator(object):
 
         """
         self.size = size
-
         self.config = {
             "allowed_chars": self.__determine_kwarg(
                 kwargs, "allowed_chars", None),
@@ -78,8 +77,11 @@ class PasswordGenerator(object):
             str: a generated password
 
         """
-        print(self.general_set * self.size)
-        print(self.size)
+        if self.size < 8:
+            raise ValueError("Passwords with length less than 8 are not safe.")
+        elif self.size > 32:
+            raise ValueError(
+                "Passwords with length greater than 32 are not fully supported.")
 
         contents = "".join(random.sample(
             list(self.general_set * self.size), self.size))

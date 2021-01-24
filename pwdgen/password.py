@@ -7,24 +7,33 @@ from termcolor import colored
 from typing import Dict
 
 
+DEFAULT_PATH = "/tmp/lastpwd.obj"
+
+
 class Password:
     MAX_PB_VALUE = 20
+    LEARNED_PATH = "~/.pwdlearner/learned.obj"
 
     def __init__(self, size: int, config: Dict, contents: str):
         self.__size = size
         self.__config = config
         self.contents = contents
         self.progress = 0
+        self.correct = 0
         self.last_attempt = "none"
 
-    def save(self):
-        with open("/tmp/lastpwd.obj", "w") as file:
-            file.write(jsonpickle.dumps(self))
+    def save(self, learned=False):
+        if learned:
+            with open(self.LEARNED_PATH, "a") as file:
+                file.write(self.contents + "\n")
+        else:
+            with open(DEFAULT_PATH, "w") as file:
+                file.write(jsonpickle.dumps(self))
 
     @staticmethod
     def load():
         try:
-            with open("/tmp/lastpwd.obj", "r") as file:
+            with open(DEFAULT_PATH, "r") as file:
                 obj = jsonpickle.loads(file.read())
                 return obj
         except IOError as e:
@@ -32,12 +41,14 @@ class Password:
                 "Could not load any password from previous sessions.")
 
     def __update_progress(self):
-        correct = 0
+        self.correct = 0
         for i in range(min(len(self.last_attempt), self.__size)):
             if self.last_attempt[i] == self.contents[i]:
-                correct += 1
+                self.correct += 1
 
-        self.progress = (correct * self.MAX_PB_VALUE) // self.__size
+        self.progress = (self.correct * self.MAX_PB_VALUE) // self.__size
+        if self.correct == self.__size:
+            self.save(learned=True)
 
     def __progressbar(self):
         print("[{}{}] ({}%)".format("#" * self.progress,
@@ -61,7 +72,9 @@ class Password:
                 except KeyboardInterrupt:
                     pass
                 clear()
-                self.last_attempt = str(input("Give in another try:"))
+
+                prompt = "Give in another try: " if self.correct == self.__size else "Polish it: "
+                self.last_attempt = str(input(prompt))
                 clear()
         except KeyboardInterrupt:
             clear()
