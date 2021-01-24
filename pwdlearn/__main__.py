@@ -20,15 +20,15 @@ if __name__ == "__main__":
     if not args.create_new:
         try:
             pwd = Password.load()
-            pwd.learn()
         except IOError:
-            pass
-
-    gen = PGen(
-        args.length,
-        allowed_chars=args.allowed_chars,
-        exclude_ambigous_chars=args.exclude_ambigous_chars,
-    )
-    pwd = gen.generate()
+            print("Please, specify tag --new to create a new password.")
+            exit(1)
+    else:
+        gen = PGen(
+            args.length,
+            allowed_chars=args.allowed_chars,
+            exclude_ambigous_chars=args.exclude_ambigous_chars,
+        )
+        pwd = gen.generate()
 
     pwd.learn()
