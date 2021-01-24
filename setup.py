@@ -31,7 +31,7 @@ class install(_install):
 setup = install(
     setup(
         name="Password Learner",
-        version="1.0.2",
+        version="1.0.3",
         description="Password Learner Utility",
         author="Daniil Timachov",
         author_email="daniiltimachov@gmail.com",
