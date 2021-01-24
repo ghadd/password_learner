@@ -2,3 +2,5 @@ pwdgen/__pycache__/
 __pycache__/
 env/
 .vscode/
+dist/
+Password_Learner.egg-info
