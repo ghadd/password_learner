@@ -53,7 +53,7 @@ class Password:
     def __progressbar(self):
         print("[{}{}] ({}%)".format("#" * self.progress,
                                     " " * (self.MAX_PB_VALUE - self.progress),
-                                    self.progress * 100 / self.__size))
+                                    self.correct * 100 / self.__size))
 
     def __print_last_attempt(self):
         self.__update_progress()
